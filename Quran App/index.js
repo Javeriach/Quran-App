@@ -12,6 +12,7 @@ let msg = document.getElementById('msg');
 let btnPlusAyatBox = document.getElementById('btn+ayatBox');
 let numberOFtimesBTnClicked = 1;
 let countSubmitBtnClicked = 0;
+let maximumAyats = 0;
 
 surah_number.addEventListener('click', function () {
   if (countSubmitBtnClicked > 0) {
@@ -50,6 +51,8 @@ submitSurahNumber.addEventListener('click', function () {
 
       start.max = response.data.numberOfAyahs;
       end.max = response.data.numberOfAyahs;
+      maximumAyats = response.data.numberOfAyahs;
+
     });
   }
 });
@@ -69,7 +72,11 @@ btn.addEventListener('click', function (event) {
     alert('Plz select the start smaller than ending Ayah');
     start.value = 1;
     end.value = 1;
-  } else if (start.value < end.value) {
+  }
+  else if (end.value > maximumAyats) {
+    alert('You have selected ending Ayah out of the range');
+  } else if (start.value <= end.value) {
+    btnPlusAyatBox.classList.remove('d-none');
     ayat_place.innerText = '';
     // Step1
     let request = new XMLHttpRequest();
@@ -111,15 +118,12 @@ btn.addEventListener('click', function (event) {
         //    if(numberOFtimesBTnClicked === 1)
 
         if (isPlaying === true || PreviousAudio === true) {
-          console.log(msg);
           msg.classList.remove('d-none');
-          console.log('No audio is already play . I will not play');
           setTimeout(() => {
             msg.classList.add('d-none');
           }, 3000);
         } else if (numberOFtimesBTnClicked === 1) {
           numberOFtimesBTnClicked = 2;
-          console.log('clicked');
 
           let request = new XMLHttpRequest();
           let array2;
@@ -134,17 +138,12 @@ btn.addEventListener('click', function (event) {
           request.addEventListener('load', function () {
             // Making object
             let response = JSON.parse(this.responseText);
-            console.log(response.data.ayahs);
             let array = response.data.ayahs;
-            console.log(array);
             let sum = 1;
 
             let endValue = Number(end.value);
-            console.log(endValue);
 
             let array2 = array.slice(startingValue, endValue);
-            console.log(array2);
-
             // procedure for playing the audio
             let length = array2.length - 2;
             let audio;
@@ -158,24 +157,18 @@ btn.addEventListener('click', function (event) {
               audio.currentTime = 0;
 
               if (audio.play()) {
-                console.log('I am running');
+                
               }
             }
 
             audio.addEventListener('ended', function () {
               if (currentIndex <= length) {
                 currentIndex++;
-                // audio.pause();
-
+                
                 playAudio();
-                console.log(currentIndex, length);
-
                 if (currentIndex === array2.length - 1) {
                   isPlaying = false;
                   PreviousAudio = false;
-                  console.log('I have maek ur day');
-                  console.log(currentIndex);
-                  console.log(length);
                   numberOFtimesBTnClicked = 1;
                 }
               }
@@ -185,7 +178,6 @@ btn.addEventListener('click', function (event) {
               playAudio();
               isPlaying = true;
               PreviousAudio = true;
-              console.log();
             }
           });
         }

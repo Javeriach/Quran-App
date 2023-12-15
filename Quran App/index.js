@@ -78,7 +78,7 @@ btn.addEventListener('click', function (event) {
     // Step2
     request.open(
       'GET',
-      `http://api.alquran.cloud/v1/surah/${surah_number.value}?offset=${startingValue}&limit=${end.value}`
+      `https://api.alquran.cloud/v1/surah/${surah_number.value}?offset=${startingValue}&limit=${end.value}`
     );
 
     // Step3
@@ -126,7 +126,7 @@ btn.addEventListener('click', function (event) {
 
           request.open(
             'GET',
-            `https://api.alquran.cloud/v1/surah/${surah_number.value}/ar.alafasy`
+            `http://api.alquran.cloud/v1/surah/${surah_number.value}/ar.alafasy`
           );
 
           request.send();

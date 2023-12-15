@@ -38,7 +38,7 @@ submitSurahNumber.addEventListener('click', function () {
     // Step2
     request.open(
       'GET',
-      `http://api.alquran.cloud/v1/surah/${surah_number.value}/en.asad`
+      `https://api.alquran.cloud/v1/surah/${surah_number.value}/en.asad'`
     );
 
     // Step3

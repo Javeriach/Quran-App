@@ -126,7 +126,7 @@ btn.addEventListener('click', function (event) {
 
           request.open(
             'GET',
-            `http://api.alquran.cloud/v1/surah/${surah_number.value}/ar.alafasy`
+            `https://api.alquran.cloud/v1/surah/${surah_number.value}/ar.alafasy`
           );
 
           request.send();
